@@ -176,6 +176,22 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  Widget _banner2() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.w),
+          image: const DecorationImage(
+            image: AssetImage('assets/images/xiaomiBanner2.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        height: 420.h,
+      ),
+    );
+  }
+
   // 内容区
   Widget _homeBody() {
     return Positioned(
@@ -189,6 +205,7 @@ class HomeView extends GetView<HomeController> {
           _focus(),
           _banner(),
           _category(),
+          _banner2(),
         ],
       ),
     );
