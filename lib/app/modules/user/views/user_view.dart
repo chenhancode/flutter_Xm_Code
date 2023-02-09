@@ -13,7 +13,7 @@ class UserView extends GetView<UserController> {
         title: const Text('UserView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'UserView is working',
           style: TextStyle(fontSize: 20),
