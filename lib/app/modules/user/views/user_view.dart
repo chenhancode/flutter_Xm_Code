@@ -22,3 +22,5 @@ class UserView extends GetView<UserController> {
     );
   }
 }
+
+

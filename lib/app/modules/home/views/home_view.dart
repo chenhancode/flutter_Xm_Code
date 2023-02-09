@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:xiaomishop/app/services/httpsClient.dart';
 import '../controllers/home_controller.dart';
 import '../../../services/keepAliveWrapper.dart';
 import '../../../services/xmIcon.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:math';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -78,10 +81,8 @@ class HomeView extends GetView<HomeController> {
       child: Obx(
         () => Swiper(
           itemBuilder: (context, index) {
-            String picUrl =
-                "https://xiaomi.itying.com/${controller.swiperList[index].pic}";
             return Image.network(
-              picUrl.replaceAll("\\", "/"),
+              HttpsClient.replaeUri(controller.swiperList[index].pic),
               fit: BoxFit.fill,
             );
           },
@@ -125,8 +126,6 @@ class HomeView extends GetView<HomeController> {
                   mainAxisSpacing: 20.h,
                 ),
                 itemBuilder: (context, i) {
-                  String? url =
-                      "https://xiaomi.itying.com/${controller.homeCategory[i + 10 * index].pic}";
                   return Column(
                     children: [
                       Container(
@@ -134,7 +133,8 @@ class HomeView extends GetView<HomeController> {
                         width: 140.h,
                         height: 140.h,
                         child: Image.network(
-                          url.replaceAll("\\", "/"),
+                          HttpsClient.replaeUri(
+                              controller.homeCategory[i + 10 * index].pic),
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -230,10 +230,9 @@ class HomeView extends GetView<HomeController> {
                   child: Obx(
                     () => Swiper(
                       itemBuilder: (context, index) {
-                        String picUrl =
-                            "https://xiaomi.itying.com/${controller.bestSellingSwiperList[index].pic}";
                         return Image.network(
-                          picUrl.replaceAll("\\", "/"),
+                          HttpsClient.replaeUri(
+                              controller.bestSellingSwiperList[index].pic),
                           fit: BoxFit.fill,
                         );
                       },
@@ -279,7 +278,7 @@ class HomeView extends GetView<HomeController> {
                       children:
                           controller.rxzxList.asMap().entries.map((entrie) {
                         var value = entrie.value;
-                        var pic = "https://xiaomi.itying.com/${value.pic}";
+
                         return Expanded(
                           flex: 1,
                           child: Container(
@@ -311,7 +310,7 @@ class HomeView extends GetView<HomeController> {
                                   child: Padding(
                                     padding: EdgeInsets.all(12.h),
                                     child: Image.network(
-                                      pic.replaceAll('\\', '/'),
+                                      HttpsClient.replaeUri(value.pic),
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),
@@ -332,10 +331,105 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  // 瀑布流
+  Widget _beatGoods() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.w, 20.h, 30.w, 20.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                '省心优惠',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 46.sp,
+                ),
+              ),
+              Text(
+                '全部优惠>',
+                style: TextStyle(
+                  fontSize: 38.sp,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Obx(
+          () => Container(
+            padding: EdgeInsets.all(26.h),
+            color: const Color.fromRGBO(246, 246, 246, 1),
+            child: MasonryGridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 25.h,
+              crossAxisSpacing: 25.h,
+              itemCount: controller.rmspList.length,
+              shrinkWrap: true, //收缩让子元素宽度自适应
+              physics: const NeverScrollableScrollPhysics(), //设置组件不滑动
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: EdgeInsets.all(20.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.w),
+                        child: Image.network(
+                          HttpsClient.replaeUri(
+                              controller.rmspList[index].sPic),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10.h),
+                        width: double.infinity,
+                        child: Text(
+                          '${controller.rmspList[index].title}',
+                          style: TextStyle(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10.h),
+                        width: double.infinity,
+                        child: Text(
+                          '${controller.rmspList[index].subTitle}',
+                          style: TextStyle(fontSize: 32.sp),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10.h),
+                        width: double.infinity,
+                        child: Text(
+                          '￥${controller.rmspList[index].price}元',
+                          style: TextStyle(
+                            fontSize: 32.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   // 内容区
   Widget _homeBody() {
     return Positioned(
-      top: -62.w,
+      top: -108.w,
       left: 0,
       right: 0,
       bottom: 0,
@@ -347,7 +441,8 @@ class HomeView extends GetView<HomeController> {
           _category(),
           _banner2(),
           _bestSelling(),
-          SizedBox(
+          _beatGoods(),
+          const SizedBox(
             height: 100,
           ),
         ],

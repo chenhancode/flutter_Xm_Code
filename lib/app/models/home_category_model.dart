@@ -55,6 +55,8 @@ class HomeCategoryResult {
     productId = json['product_id'];
   }
 
+  get result => null;
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = sId;

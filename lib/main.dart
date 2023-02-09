@@ -16,10 +16,15 @@ void main() {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          // 配置主题
+          theme: ThemeData(
+            primarySwatch: Colors.grey,
+          ),
           debugShowCheckedModeBanner: false,
           title: "Application",
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
+          defaultTransition: Transition.rightToLeft,
         );
       },
     ),
