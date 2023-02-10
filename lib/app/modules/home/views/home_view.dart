@@ -11,6 +11,7 @@ import 'dart:math';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   // 顶部导航
   Widget _getAppBar() {
     return Positioned(
@@ -366,8 +367,10 @@ class HomeView extends GetView<HomeController> {
               mainAxisSpacing: 25.h,
               crossAxisSpacing: 25.h,
               itemCount: controller.rmspList.length,
-              shrinkWrap: true, //收缩让子元素宽度自适应
-              physics: const NeverScrollableScrollPhysics(), //设置组件不滑动
+              shrinkWrap: true,
+              //收缩让子元素宽度自适应
+              physics: const NeverScrollableScrollPhysics(),
+              //设置组件不滑动
               itemBuilder: (context, index) {
                 return Container(
                   padding: EdgeInsets.all(20.w),
