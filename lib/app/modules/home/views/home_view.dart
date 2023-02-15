@@ -20,26 +20,31 @@ class HomeView extends GetView<HomeController> {
       right: 0,
       child: Obx(
         () => AppBar(
-          title: AnimatedContainer(
-            width: controller.flag.value ? 800.w : 648.w,
-            height: 96.h,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(237, 252, 243, 236),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            duration: const Duration(milliseconds: 300),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 4, 0),
-                  child: Icon(Icons.search),
-                ),
-                Text(
-                  '手机',
-                  style: TextStyle(fontSize: 32.sp),
-                ),
-              ],
+          title: InkWell(
+            onTap: (){
+              Get.toNamed('/search');
+            },
+            child: AnimatedContainer(
+              width: controller.flag.value ? 800.w : 648.w,
+              height: 96.h,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(237, 252, 243, 236),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              duration: const Duration(milliseconds: 300),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 4, 0),
+                    child: Icon(Icons.search),
+                  ),
+                  Text(
+                    '手机',
+                    style: TextStyle(fontSize: 32.sp),
+                  ),
+                ],
+              ),
             ),
           ),
           centerTitle: true,

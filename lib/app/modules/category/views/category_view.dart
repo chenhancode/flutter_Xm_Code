@@ -111,25 +111,30 @@ class CategoryView extends GetView<CategoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          width: 840.w,
-          height: 96.h,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(246, 246, 246, 1),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 4, 0),
-                child: Icon(Icons.search),
-              ),
-              Text(
-                '手机',
-                style: TextStyle(fontSize: 32.sp, color: Colors.black45),
-              ),
-            ],
+        title: InkWell(
+          onTap: (){
+            Get.toNamed('/search');
+          },
+          child: Container(
+            width: 840.w,
+            height: 96.h,
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(246, 246, 246, 1),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 4, 0),
+                  child: Icon(Icons.search),
+                ),
+                Text(
+                  '手机',
+                  style: TextStyle(fontSize: 32.sp, color: Colors.black45),
+                ),
+              ],
+            ),
           ),
         ),
         actions: [

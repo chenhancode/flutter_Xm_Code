@@ -254,18 +254,23 @@ class ProductListView extends GetView<ProductListController> {
             color: const Color.fromRGBO(246, 246, 246, 1),
             borderRadius: BorderRadius.circular(30),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
-                child: Icon(Icons.search),
-              ),
-              Text(
-                '手机',
-                style: TextStyle(fontSize: 32.sp, color: Colors.black45),
-              ),
-            ],
+          child: InkWell(
+            onTap: (){
+              Get.offAndToNamed('/search');
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
+                  child: Icon(Icons.search),
+                ),
+                Text(
+                  controller.Keywords != null ? "${controller.Keywords}" : "",
+                  style: TextStyle(fontSize: 32.sp, color: Colors.black45),
+                ),
+              ],
+            ),
           ),
         ),
         centerTitle: true,

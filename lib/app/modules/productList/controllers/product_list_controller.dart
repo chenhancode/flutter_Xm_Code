@@ -5,6 +5,10 @@ import '../../../models/home_rxzx_model.dart';
 import '../../../services/httpsClient.dart';
 
 class ProductListController extends GetxController {
+  String? Keywords = Get.arguments['Keywords'];
+  String? cid = Get.arguments['cid'];
+  String apiUri = '';
+
   //TODO: Implement ProductListController
   ScrollController scrollController = ScrollController();
   RxList<RxzxResult> splbList = <RxzxResult>[].obs;
@@ -65,8 +69,14 @@ class ProductListController extends GetxController {
   void getsplbList() async {
     if (flag && hasData.value) {
       flag = false;
-      var re = await httpsClient.get(
-          'api/plist?cid=${Get.arguments['cid']}&page=${page.value}&pageSize=$pageSize&sort=$sort');
+      if (cid != null) {
+        apiUri =
+            'api/plist?cid=$cid&page=${page.value}&pageSize=$pageSize&sort=$sort';
+      } else {
+        apiUri =
+            'api/plist?search=$Keywords&page=${page.value}&pageSize=$pageSize&sort=$sort';
+      }
+      var re = await httpsClient.get(apiUri);
       if (re != null) {
         var gtl = HomeRxzx.fromJson(re.data);
         // 拼接数据
