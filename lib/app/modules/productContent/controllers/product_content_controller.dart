@@ -1,12 +1,25 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class ProductContentController extends GetxController {
   //TODO: Implement ProductContentController
+  final ScrollController scrollController = ScrollController();
 
-  final count = 0.obs;
+  RxDouble opcity = 0.0.obs;
+
+  scrollControllerListener(){
+    scrollController.addListener(() {
+      if(scrollController.position.pixels <= 100){
+        opcity.value =scrollController.position.pixels/100;
+        update();
+      }
+    });
+  }
+
   @override
   void onInit() {
     super.onInit();
+    scrollControllerListener();
   }
 
   @override
@@ -19,5 +32,5 @@ class ProductContentController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+
 }

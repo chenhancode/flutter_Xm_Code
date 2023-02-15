@@ -21,7 +21,7 @@ class HomeView extends GetView<HomeController> {
       child: Obx(
         () => AppBar(
           title: InkWell(
-            onTap: (){
+            onTap: () {
               Get.toNamed('/search');
             },
             child: AnimatedContainer(
@@ -377,53 +377,60 @@ class HomeView extends GetView<HomeController> {
               physics: const NeverScrollableScrollPhysics(),
               //设置组件不滑动
               itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.all(20.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10.w),
-                        child: Image.network(
-                          HttpsClient.replaeUri(
-                              controller.rmspList[index].sPic),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10.h),
-                        width: double.infinity,
-                        child: Text(
-                          '${controller.rmspList[index].title}',
-                          style: TextStyle(
-                            fontSize: 36.sp,
-                            fontWeight: FontWeight.bold,
+                return InkWell(
+                  onTap: () {
+                    Get.toNamed("/product-content", arguments: {
+                      "id": controller.rmspList[index].sId,
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(20.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10.w),
+                          child: Image.network(
+                            HttpsClient.replaeUri(
+                                controller.rmspList[index].sPic),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10.h),
-                        width: double.infinity,
-                        child: Text(
-                          '${controller.rmspList[index].subTitle}',
-                          style: TextStyle(fontSize: 32.sp),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10.h),
-                        width: double.infinity,
-                        child: Text(
-                          '￥${controller.rmspList[index].price}元',
-                          style: TextStyle(
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: EdgeInsets.all(10.h),
+                          width: double.infinity,
+                          child: Text(
+                            '${controller.rmspList[index].title}',
+                            style: TextStyle(
+                              fontSize: 36.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          padding: EdgeInsets.all(10.h),
+                          width: double.infinity,
+                          child: Text(
+                            '${controller.rmspList[index].subTitle}',
+                            style: TextStyle(fontSize: 32.sp),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10.h),
+                          width: double.infinity,
+                          child: Text(
+                            '￥${controller.rmspList[index].price}元',
+                            style: TextStyle(
+                              fontSize: 32.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
